@@ -1,6 +1,6 @@
 <?php 
   session_start();
-  require_once("../../data/db_connection.php");
+  require_once("../data/db_connection.php");
 ?>
 <!-- 
 	File:    index.php
@@ -12,7 +12,7 @@
 <html>
   <head>
     <title> Winter 2020 Project - Lamp2 </title>
-   	<link rel="stylesheet" href="../../css/bootstrap.min.css">
+   	<link rel="stylesheet" href="../css/bootstrap.min.css">
   </head>
   <body>
   <?php
