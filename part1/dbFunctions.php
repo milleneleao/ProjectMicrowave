@@ -2,10 +2,11 @@
 <?php
 
 function validatePath($data){
-	$err_msgs = array();
+    $err_msgs = array();
     for ($i = 0; $i < count($data); $i++) {
         echo $data[$i]. "<br />";
     }
+    echo "<br /><br />";
 	return $err_msgs;
 }
 
@@ -14,6 +15,7 @@ function validatePoint($data,$point){
     for ($i = 0; $i < count($data); $i++) {
         echo $data[$i]. "<br />";
     }
+    echo "<br /><br />";
 	return $err_msgs;
 }
 
@@ -22,6 +24,7 @@ function validateMidPoints($data){
     for ($i = 0; $i < count($data); $i++) {
         echo $data[$i]. "<br />";
     }
+    echo "<br /><br />";
 	return $err_msgs;
 }
 ?>

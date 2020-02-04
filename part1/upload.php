@@ -7,8 +7,8 @@
 	File:    index.php
 	Purpose: Upload CSV to permanent folder and upload data to Database
 	Authors: Millene L B S Cesconetto
-			 Olha Tymoshchuk
-			 Omar Rafik
+			     Olha Tymoshchuk
+			     Omar Rafik
 -->
 <html>
   <head>
@@ -135,7 +135,9 @@
           // Read each line and send to Database
           $handle  = fopen($newName, "r");
           $count_line = 1;
+          
           while  ($line  = fgetcsv($handle, 1000, ","))  {
+            echo "Line ".$count_line."  <br />";
             switch ($count_line) {
               case 1: // First Line - Information about Path table
                   validatePath($line);
