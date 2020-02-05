@@ -1,4 +1,10 @@
-
+<!-- 
+	File:    dbFunctions.php
+	Purpose: Validate's Functions and Database Functions 
+	Authors: Millene L B S Cesconetto
+			 Olha Tymoshchuk
+			 Omar Rafik
+-->
 <?php
 
 function validatePath($data){

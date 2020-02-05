@@ -74,7 +74,7 @@
               <div class="col-3"></div>
             </div>
             <div class="col-lg-12 pt-5" style="text-align: center;">
-              <a href="../../index.php">Return to menu</a>
+              <a href="../index.php">Return to menu</a>
             </div>
 	  	    </div>
 
@@ -142,10 +142,10 @@
               case 1: // First Line - Information about Path table
                   validatePath($line);
                   break;
-              case 2:
+              case 2: // Second Line - Information about Point table - Start Point 
                   validatePoint($line,"start");
                   break;
-              case 3:
+              case 3: // Second Line - Information about Point table
                   validatePoint($line,"end"); 
                   break;
               default:
