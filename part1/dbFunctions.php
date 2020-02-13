@@ -264,38 +264,40 @@ function validateMidPoints($data){
 }
 
 
-function insertPPP(){
+//function to insert valid midpoints into database
+
+function insertValidMidpoints() {
     $db_conn = connectDB();
-            
-    if (!$db_conn){
-	        $status = "DBConnectionFail";
-            } 
-            else {
-		    $stmt = $db_conn->prepare("insert into pathway (idpathway, pathname, opfrq, description, note, pathfile) values(?,?,?,?,?,?)");
-		    if (!$stmt){
-			    $status = "PrepareFail";
-            } 
-            else {
-            $idPathfile = $_SESSION['idPathFile'];
-			//encodes data for the security
-			//$content = base64_encode(file_get_contents($_FILES['uploads']['tmp_name']));
-			$data = array($name, $age, $dio, $f_name, $f_new_name, $f_date, $f_size, $f_type);
-			$result = $stmt->execute($data);
-			if(!$result){
-                $status = "Error".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
                 
-                //$status = "Execute Fail";
-			}
-		}
-		$db_conn = NULL;
-    }
-    if ($status != "OK"){
-        //delete
-        unlink($newName);
+        if (!$db_conn){
+                $status = "DBConnectionFail";
+                } 
+                else {
+                $stmt = $db_conn->prepare("insert into midpoint (distance, groundheight, terraintype, obstrucheight, obstructype) values(?,?,?,?,?)");
+                if (!$stmt){
+                    $status = "PrepareFail";
+                } 
+                else {
+                $distance = $_SESSION['distance'];
+                $groundheight = $_SESSION['groundheight'];
+                $terraintype = $_SESSION['terraintype'];
+                $obstrucheight = $_SESSION['obstrucheight'];
+                $obstructype = $_SESSION['obstructype'];
+    
+                //encodes data for the security
+                $data = array($distance, $groundheight, $terraintype, $obstrucheight, $obstructype);
+                $result = $stmt->execute($data);
+                if(!$result){
+                    $status = "Error".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
+                    
+                    //$status = "Execute Fail";
+                }
+            }
+            $db_conn = NULL;
         }
-    }
-}	
-	return $status;
-}
-}
+        return $status;
+        }
+    
+    //=================================================
+    
 ?>
