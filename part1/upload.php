@@ -135,26 +135,32 @@
           // Read each line and send to Database
           $handle  = fopen($newName, "r");
           $count_line = 1;
-          
+          print_r($_SESSION);
           while  ($line  = fgetcsv($handle, 1000, ","))  {
             echo "Line ".$count_line."  <br />";
             switch ($count_line) {
               case 1: // First Line - Information about Path table
                   clearSession();
-                  validatePath($line);
-                  insertPathway();
+                  $error = validatePathway($line);
+                  if(count($error) === 0){
+                    insertPathway();
+                  }
+                  //insertPathway();
+                  //$status = insertPathway();
+                  //echo $status ;
                   break;
               case 2: // Second Line - Information about Point table - Start Point 
-                  clearSession();
+                  //clearSession();
                   validatePoint($line,"start");
                   insertPoints("start");
                   break;
               case 3: // Second Line - Information about Point table
-                  clearSession();
+                  //clearSession();
                   validatePoint($line,"end");
                   insertPoints("end"); 
                   break;
               default:
+                  //clearSession();
                   validateMidPoints($line);
             }
             $count_line++;

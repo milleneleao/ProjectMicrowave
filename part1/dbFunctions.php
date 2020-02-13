@@ -6,6 +6,8 @@
 			 Omar Rafik
 -->
 <?php
+require_once("../db/db_connection.php");
+
 function clearSession(){
     $_SESSION['pathname'] = ""; 
     $_SESSION['pathname'] = "";
@@ -22,6 +24,7 @@ function validatePathway($data){
     $err_msgs = array();
     for ($i = 0; $i < count($data); $i++) {
         if($i == 0){
+            
             if(empty($data[$i])){
                 $error_msgs[] = "the field is required";
             }
@@ -39,13 +42,15 @@ function validatePathway($data){
             else if(!is_numeric($data[$i])){
                 $error_msgs[] = "The field should be numeric";
             } 
-            else if($data[$i]< 1.0 && $data[$i] > 100.0){
+            else if($data[$i] < 1.0 && $data[$i] > 100.0){
                 $error_msgs[] = "The operating frequency for the path in
                 Gigahertz (GHz). Allowed values are between
                 1.0 and 100.0 GHz";
             }
             else{
+                
                 $opfrq = $data[$i];
+                echo $opfrq;
             }
         }
         if($i == 2){
@@ -73,13 +78,13 @@ function validatePathway($data){
             }
         }
     }
-
-    if(count($err_msgs) < 0){
+    
+    if(count($err_msgs) === 0){
         $_SESSION['pathname'] = $pathName;
         $_SESSION['opfrq'] = $opfrq;
         $_SESSION['description'] = $description;
         $_SESSION['note'] = $note;
-        $_SESSION['pathfile'] = $pathfile;
+        
     }
 
     return $err_msgs;
@@ -276,7 +281,7 @@ function validateMidPoints($data){
 
 
 function insertPathway(){
-    
+    print_r($_SESSION);
     $db_conn = connectDB();
             
         if (!$db_conn){
@@ -289,7 +294,7 @@ function insertPathway(){
             } 
             else {
             $pathname = $_SESSION['pathname'];
-            $opfrq = $_SESSION['pathname'];
+            $opfrq = $_SESSION['opfrq'];
             $description = $_SESSION['description'];
             $note = $_SESSION['note'];
             $pathfile = $_SESSION['store_file_name'];
@@ -301,15 +306,18 @@ function insertPathway(){
                 $status = "Error".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
                 
                 //$status = "Execute Fail";
-			}
+            }
+            else{
+                $status = "OK";
+            }
 		}
 		$db_conn = NULL;
     }
-    if ($status != "OK"){
-        //delete
-        unlink($pathfile);
-        }
-
+    // if ($status != "OK"){
+    //     //delete
+    //     unlink($pathfile);
+    //     }
+    
 	return $status;
 
 }
