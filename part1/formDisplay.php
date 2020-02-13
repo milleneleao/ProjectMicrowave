@@ -2,7 +2,7 @@
   require_once("../db/db_connection.php");
 ?>
 <!-- 
-	File:    displayPathway.php
+	File:    formDisplay.php
 	Purpose: display the contact we entered
 	Authors: Millene L B S Cesconetto
 			 Olha Tymoshchuk
@@ -13,6 +13,8 @@
       <meta charset="utf-8">
 	  <title>Path Way List</title>
       <link rel="stylesheet" href="../css/bootstrap.min.css">
+	  <script src="js/jquery-3.3.1.min.js"></script> 
+	  <script src="js/ajax.js"></script> 
   </head>
   <body>
   <div class="container-fluid">
@@ -27,7 +29,7 @@
               <div class="col-3"></div>
               <div class="col-6 text-center">
 
-
+		 <FORM method="POST" id="displayForm">
 			<table class="table table-bordered">
 			<thead class="thead-light">
   			  <tr>
@@ -52,8 +54,13 @@
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){ ?>
 			<tr>
 	   			<td><?php echo $row['pathname']; ?></td>
-                <th scope="row"><input type="radio" name="list_select[]" value="<?php echo $row['idpathway']; ?>"></th>
-  
+                <th scope="row">
+				<!-- <td><?php echo $row['pathname']; ?><td><button class="btn btn-sm btn-primary display_class" id=.<?php echo $row['idpathway']; ?> >Display</button>
+				<button class="btn btn-sm btn-primary resert_class" id=.<?php echo $row['idpathway']; ?> >Reset</button></td></tr>";
+					 -->
+				<input type="submit" class='btn btn-primary display' data-id=<?php echo $row['idpathway']; ?>" value="Display" class="btn btn-primary">
+				<input type="submit" class='btn btn-primary reset'   data-id=<?php echo $row['idpathway']; ?>" value="Reset" class="btn btn-primary"> 
+				 </th>
 			</tr>
 <?php $db_conn = NULL; } ?>
 
@@ -75,12 +82,13 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){ ?>
 ?>
   </tbody>
   </table>
- 
+  </FORM>
     <div class="col-3"></div>
             </div>
             <div class="col-lg-12 pt-5" style="text-align: center;">
               <a href="../index.php">Return to menu</a>
             </div>
+			<div >
 	  	    </div>
 
         </div>
