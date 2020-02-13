@@ -6,7 +6,18 @@
 			 Omar Rafik
 -->
 <?php
-
+function clearSession(){
+    $_SESSION['pathname'] = ""; 
+    $_SESSION['pathname'] = "";
+    $_SESSION['description'] = "";
+    $_SESSION['note'] = "";
+    $_SESSION['store_file_name'] = ""; 
+    $_SESSION['point'] = "";
+    $_SESSION['groundheight'] = "";
+    $_SESSION['antennaheight'] = "";
+    $_SESSION['antennatype'] = "";
+    $_SESSION['antennalength'] = "";
+}
 function validatePathway($data){
     $err_msgs = array();
     for ($i = 0; $i < count($data); $i++) {
@@ -90,14 +101,14 @@ function validatePoint($data,$point){
                 should be 0";
             }
             else{
-                $startpoint = $data[$i];
+                $point = $data[$i];
             }
             
             if($data[$i] < 0 && $point == "end"){
                 $error_msgs[] = "The end point should be more than 0";
             }
             else {
-                $endpoint = $data[$i];
+                $point = $data[$i];
             }
         }
         if($i == 1){
@@ -149,8 +160,8 @@ function validatePoint($data,$point){
         }
     }
     if(count($err_msgs) < 0){
-        $_SESSION['startpoint'] = $startpoint;
-        $_SESSION['endpoint'] = $endpoint;
+        
+        $_SESSION['point'] = $point;
         $_SESSION['groundheight'] = $groundheight;
         $_SESSION['antennatype'] = $antennatype;
         $_SESSION['antennalength'] = $antennalength;
@@ -264,22 +275,27 @@ function validateMidPoints($data){
 }
 
 
-function insertPPP(){
+function insertPathway(){
+    
     $db_conn = connectDB();
             
-    if (!$db_conn){
+        if (!$db_conn){
 	        $status = "DBConnectionFail";
             } 
-            else {
-		    $stmt = $db_conn->prepare("insert into pathway (idpathway, pathname, opfrq, description, note, pathfile) values(?,?,?,?,?,?)");
+        else {
+		    $stmt = $db_conn->prepare("insert into pathway ( pathname, opfrq, description, note, pathfile) values(?,?,?,?,?)");
 		    if (!$stmt){
 			    $status = "PrepareFail";
             } 
             else {
-            $idPathfile = $_SESSION['idPathFile'];
+            $pathname = $_SESSION['pathname'];
+            $opfrq = $_SESSION['pathname'];
+            $description = $_SESSION['description'];
+            $note = $_SESSION['note'];
+            $pathfile = $_SESSION['store_file_name'];
 			//encodes data for the security
 			//$content = base64_encode(file_get_contents($_FILES['uploads']['tmp_name']));
-			$data = array($name, $age, $dio, $f_name, $f_new_name, $f_date, $f_size, $f_type);
+			$data = array($pathname, $opfrq, $description, $note, $pathfile);
 			$result = $stmt->execute($data);
 			if(!$result){
                 $status = "Error".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
@@ -291,11 +307,53 @@ function insertPPP(){
     }
     if ($status != "OK"){
         //delete
-        unlink($newName);
+        unlink($pathfile);
         }
-    }
-}	
+
 	return $status;
+
 }
+
+function insertPoints($point){
+    
+    $db_conn = connectDB();
+            
+        if (!$db_conn){
+	        $status = "DBConnectionFail";
+            } 
+        else {
+            if($point == "start"){
+                $stmt = $db_conn->prepare("insert into points ( startpoint, groundheight, antennaheight, antennatype, antennalength) values(?,?,?,?,?)");
+            }
+            else if($point == "end"){
+                $stmt = $db_conn->prepare("insert into points ( endpoint, groundheight, antennaheight, antennatype, antennalength) values(?,?,?,?,?)");
+            }
+		    
+            if (!$stmt){
+			    $status = "PrepareFail";
+            } 
+            else {
+            $pointIns = $_SESSION['point'];
+            $groundheight = $_SESSION['groundheight'];
+            $antennaheight = $_SESSION['antennaheight'];
+            $antennatype = $_SESSION['antennatype'];
+            $antennalength = $_SESSION['antennalength'];
+			//encodes data for the security
+			//$content = base64_encode(file_get_contents($_FILES['uploads']['tmp_name']));
+			$data = array($pointIns, $groundheight, $antennaheight, $antennatype, $antennalength);
+			$result = $stmt->execute($data);
+			if(!$result){
+                $status = "Error".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
+                
+                //$status = "Execute Fail";
+			}
+		}
+		$db_conn = NULL;
+    }
+
+
+	return $status;
+
 }
+
 ?>
