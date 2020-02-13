@@ -264,7 +264,7 @@ function validateMidPoints($data){
 }
 
 
-//function to insert valid midpoints into database
+//function to insert valid midpoints into database !
 
 function insertValidMidpoints() {
     $db_conn = connectDB();
