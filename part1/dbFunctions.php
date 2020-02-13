@@ -364,4 +364,44 @@ function insertPoints($point){
 
 }
 
+//function to insert valid midpoints into database !
+
+function insertValidMidpoints() {
+    $db_conn = connectDB();
+            
+        if (!$db_conn){
+	        $status = "DBConnectionFail";
+            } 
+        else {
+		    $stmt = $db_conn->prepare("insert into pathway ( pathname, opfrq, description, note, pathfile) values(?,?,?,?,?)");
+		    if (!$stmt){
+			    $status = "PrepareFail";
+            } 
+            else {
+            $pathname = $_SESSION['pathname'];
+            $opfrq = $_SESSION['pathname'];
+            $description = $_SESSION['description'];
+            $note = $_SESSION['note'];
+            $pathfile = $_SESSION['store_file_name'];
+			//encodes data for the security
+			//$content = base64_encode(file_get_contents($_FILES['uploads']['tmp_name']));
+			$data = array($pathname, $opfrq, $description, $note, $pathfile);
+			$result = $stmt->execute($data);
+			if(!$result){
+                $status = "Error".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
+                
+                //$status = "Execute Fail";
+			}
+		}
+		$db_conn = NULL;
+    }
+    if ($status != "OK"){
+        //delete
+        unlink($pathfile);
+        }
+
+	return $status;
+
+}
+
 ?>
