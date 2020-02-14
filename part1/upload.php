@@ -21,6 +21,7 @@
           $err_msg = validate_Form();
           if (count($err_msg) > 0) {
               form_1($err_msg);
+
               //displayErrors();
 
           } else {
@@ -135,38 +136,75 @@
           // Read each line and send to Database
           $handle  = fopen($newName, "r");
           $count_line = 1;
+          //print_r($_SESSION);
+
+          $db_conn = connectDB();
+          //$db_conn->beginTransaction();
+
+          //b$db->eginTransaction();
           print_r($_SESSION);
           while  ($line  = fgetcsv($handle, 1000, ","))  {
-            echo "Line ".$count_line."  <br />";
-            switch ($count_line) {
-              case 1: // First Line - Information about Path table
-                  clearSession();
-                  $error = validatePathway($line);
-                  if(count($error) === 0){
-                    insertPathway();
-                  }
-                  //insertPathway();
-                  //$status = insertPathway();
-                  //echo $status ;
-                  break;
-              case 2: // Second Line - Information about Point table - Start Point 
-                  //clearSession();
-                  validatePoint($line,"start");
-                  insertPoints("start");
-                  break;
-              case 3: // Second Line - Information about Point table
-                  //clearSession();
-                  validatePoint($line,"end");
-                  insertPoints("end"); 
-                  break;
-              default:
-                  //clearSession();
-                  validateMidPoints($line);
+            
+            if($count_line == 1){
+              $error = validatePathway($line);
+              if(count($error) === 0){
+                clearSession();
+                insertPathway($db_conn);
+              }
+              else{
+                break ;
+              }
             }
-            $count_line++;
-          }         
+
+            if ($count_line == 2){
+              $error = validatePoint($line,"start");
+              if(count($error) === 0){
+                clearSession();
+                insertPoints("start", $db_conn );
+              }
+              else{
+                break;
+              }
+            }
+
+            if ($count_line == 3){
+                         
+              $error = validatePoint($line,"end");
+              
+              if(count($error) === 0){
+                clearSession();
+                insertPoints("end", $db_conn ); 
+              }
+              else{
+                break;
+              }
+            }
+
+            if ($count_line > 3){
+        
+              $error = validateMidPoints($line);
+              //echo count($error);
+              if(count($error) === 0){
+                clearSession();
+                insertValidMidpoints( $db_conn );
+              }
+              else{
+                break ;
+              }
+            }
+            
+            $count_line++;   
+          }//end while
+          // if(count($error) === 0) {
+          //   $db_conn->commit();
+          // }
+          // else{
+          //   $db_conn->rollback();
+          // }
+          $db_conn = NULL;     
         }
       }
+      displayErrors($error);
       return $status;
     }  
 

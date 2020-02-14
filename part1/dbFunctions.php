@@ -6,11 +6,9 @@
 			 Omar Rafik
 -->
 <?php
-require_once("../db/db_connection.php");
 
 function clearSession(){
     $_SESSION['pathname'] = ""; 
-    $_SESSION['pathname'] = "";
     $_SESSION['description'] = "";
     $_SESSION['note'] = "";
     $_SESSION['store_file_name'] = ""; 
@@ -21,23 +19,23 @@ function clearSession(){
     $_SESSION['antennalength'] = "";
 }
 function validatePathway($data){
-    $err_msgs = array();
+    $error_msgs = array();
     for ($i = 0; $i < count($data); $i++) {
         if($i == 0){
             
-            if(empty($data[$i])){
+            if(strlen($data[$i]) == 0){
                 $error_msgs[] = "the field is required";
             }
             else if(strlen($data[$i]) >  100){
                 $error_msgs[] = "The maximum length is 100 characters";
             }
             else{
-                $pathName = $data[$i];
+                $pathname = $data[$i];
             }
         }
         if($i == 1){
-            if(empty($data[$i])){
-                $error_msgs[] = "the field is requires";
+            if(strlen($data[$i]) == 0){
+                $error_msgs[] = "the field is required";
             }
             else if(!is_numeric($data[$i])){
                 $error_msgs[] = "The field should be numeric";
@@ -50,12 +48,12 @@ function validatePathway($data){
             else{
                 
                 $opfrq = $data[$i];
-                echo $opfrq;
+               
             }
         }
         if($i == 2){
-            if(empty($data[$i])){
-                $error_msgs[] = "the field is requires";
+            if(!isset($data[$i])){
+                $error_msgs[] = "the field is required";
             }
             else if(strlen($data[$i]) > 225){
                 $error_msgs[] = "A short description of the path
@@ -79,22 +77,22 @@ function validatePathway($data){
         }
     }
     
-    if(count($err_msgs) === 0){
-        $_SESSION['pathname'] = $pathName;
+    if(count($error_msgs) === 0){
+        $_SESSION['pathname'] = $pathname;
         $_SESSION['opfrq'] = $opfrq;
         $_SESSION['description'] = $description;
         $_SESSION['note'] = $note;
         
     }
 
-    return $err_msgs;
+    return $error_msgs;
 }
 
 function validatePoint($data,$point){
-    $err_msgs = array();
+    $error_msgs = array();
     for ($i = 0; $i < count($data); $i++) {
         if($i == 0){
-            if(empty($data[$i])){
+            if(strlen($data[$i]) == 0){
                 $error_msgs[] = "the field is required";
             }
             else if(!is_numeric($data[$i])){
@@ -117,7 +115,7 @@ function validatePoint($data,$point){
             }
         }
         if($i == 1){
-            if(empty($data[$i])){
+            if(strlen($data[$i]) == 0){
                 $error_msgs[] = "The value shouldn't be empty";
             }
             else if(!is_numeric($data[$i])){
@@ -129,7 +127,7 @@ function validatePoint($data,$point){
 
         }
         if($i == 2){
-            if(empty($data[$i])){
+            if(strlen($data[$i]) == 0){
                 $error_msgs[] = "the field is requires";
             }
             else if(!is_numeric($data[$i])){
@@ -140,12 +138,18 @@ function validatePoint($data,$point){
             }
         }
         if($i == 3){
-            if($data[$i] === "LDF4-50A" || $data[$i] === "LDF5-50A" || $data[$i] === "LDF-6-50" || $data[$i] === "LDF-6-50" || $data[$i] === "LDF7-50A" || $data[$i] === "LDF12-50"){
-                $error_msgs[] = "Allowed values are:
-                LDF4-50A
-                LDF5-50A
-                LDF-6-50
-                LDF7-50A
+            if($data[$i] !== "LDF4-50A" && 
+                $data[$i] !== "LDF5-50A" &&
+                $data[$i] !== "LDF-6-50" && 
+                $data[$i] !== "LDF-6-50" && 
+                $data[$i] !== "LDF7-50A" && 
+                $data[$i] !== "LDF12-50"){
+                
+                    $error_msgs[] = "Allowed values are:<br/>
+                LDF4-50A,<br/>
+                LDF5-50A,<br/>
+                LDF-6-50,<br/>
+                LDF7-50A,<br/>
                 LDF12-50";
             }
             else {
@@ -153,8 +157,8 @@ function validatePoint($data,$point){
             }
         }
         if($i == 4){
-            if(empty($data[$i])){
-                $error_msgs[] = "the field is requires";
+            if(strlen($data[$i]) == 0){
+                $error_msgs[] = "the field is required";
             }
             else if(!is_numeric($data[$i])){
                 $error_msgs[] = "The value should be numeric";
@@ -164,21 +168,21 @@ function validatePoint($data,$point){
             }
         }
     }
-    if(count($err_msgs) < 0){
+    if(count($error_msgs) === 0){
         
         $_SESSION['point'] = $point;
         $_SESSION['groundheight'] = $groundheight;
         $_SESSION['antennatype'] = $antennatype;
         $_SESSION['antennalength'] = $antennalength;
     }
-	return $err_msgs;
+	return $error_msgs;
 }
 
 function validateMidPoints($data){
-    $err_msgs = array();
+    $error_msgs = array();
     for ($i = 0; $i < count($data); $i++) {
         if($i == 0){
-            if(empty($data[$i])){
+            if(strlen($data[$i]) == 0){
                 $error_msgs[] = "the field is requires";
             }
             else if(!is_numeric($data[$i])){
@@ -189,7 +193,7 @@ function validateMidPoints($data){
             }
         }
         if($i == 1){
-            if(empty($data[$i])){
+            if(strlen($data[$i]) == 0){
                 $error_msgs[] = "the field is requires";
             }
             else if(strlen($data[$i]) > 50){
@@ -201,36 +205,43 @@ function validateMidPoints($data){
 
         }
         if($i == 2){
-            if(empty($data[$i])){
+            if(strlen($data[$i]) == 0){
                 $error_msgs[] = "the field is requires";
             }
             else if(strlen($data[$i]) > 50){
-                $error_msgs[] = "The value should be numeric";
+                $error_msgs[] = "The value should not exceed 50 charaters";
             }
-            else if($data[$i] !== "Grassland" || $data[$i] !== "Rough Grassland" 
-            || $data[$i] !== "Rough Grassland" || $data[$i] !== "Smooth Rock" 
-            || $data[$i] !== "Bare Rock" || $data[$i] !== "Bare earth"
-            || $data[$i] !== "Paved Surface" || $data[$i] !== "Lake"
-            || $data[$i] !== "Ocean"){
-                $error_msgs[] = "Maximum length 50 characters. The type of
-                terrain found at a midpoint. The allowed
-                values are:
-                Grassland
-                Rough Grassland
-                Smooth rock
-                Bare Rock
-                Bare earth
-                Paved Surface
-                Lake
-                Ocean";
+            else if($data[$i] !== "Grassland" 
+                 && $data[$i] !== "Rough Grassland" 
+                 && $data[$i] !== "Smooth rock" 
+                 && $data[$i] !== "Bare Rock" 
+                 && $data[$i] !== "Bare earth"
+                 && $data[$i] !== "Paved Surface" 
+                 && $data[$i] !== "Lake"
+                 && $data[$i] !== "Ocean"
+                 && $data[$i] !== "Rough rock"
+                 && $data[$i] !== "Bare soil"){
+                
+                    $error_msgs[] = "Maximum length 50 characters. The type of
+                terrain found at a midpoint. <br/>The allowed
+                values are:<br/>
+                Grassland,<br/>
+                Rough Grassland,<br/>
+                Smooth rock,<br/>
+                Bare Rock,<br/>
+                Bare earth,<br/>
+                Paved Surface,<br/>
+                Lake,<br/>
+                Ocean,<br/>
+                Rough rock";
             }
             else{
                 $terraintype = $data[$i];
             }
         }
         if($i == 3){
-            if(empty($data[$i])){
-                $error_msgs[] = "the field is requires";
+            if(strlen($data[$i]) == 0){
+                $error_msgs[] = "the field is required";
             }
             else if(!is_numeric($data[$i])){
                 $error_msgs[] = "The value should be numeric";
@@ -240,26 +251,32 @@ function validateMidPoints($data){
             }
         }
         if($i == 4){
-            if(empty($data[$i])){
-                $error_msgs[] = "the field is requires";
+            if(strlen($data[$i]) == 0){
+                $error_msgs[] = "the field is required";
             }
             else if(strlen($data[$i]) > 50){
-                $error_msgs[] = "The value should be numeric";
+                $error_msgs[] = "The value should not exceed 50 characters";
             }
-            else if($data[$i] !== "Trees" || $data[$i] !== "Brush" 
-            || $data[$i] !== "Buildings" || $data[$i] !== "Webbed Towers" 
-            || $data[$i] !== "Solid Towers" || $data[$i] !== "Solid Towers"
-            || $data[$i] !== "Power Cables "){
+            else if($data[$i] !== "None" 
+                 && $data[$i] !== "Trees" 
+                 && $data[$i] !== "Brush" 
+                 && $data[$i] !== "Buildings" 
+                 && $data[$i] !== "Webbed Towers" 
+                 && $data[$i] !== "Solid Towers" 
+                 && $data[$i] !== "Power Cables"
+                 && $data[$i] !== "Building"){
+                
                 $error_msgs[] = "Maximum length 50 characters. The type of
-                terrain found at a midpoint. The allowed
-                values are:
-                None
-                Trees
-                Brush
-                Buildings
-                Webbed Towers
-                Solid Towers
-                Power Cables";
+                terrain found at a midpoint.<br/>The allowed
+                values are:<br/>
+                None,<br/>
+                Trees,<br/>
+                Brush,<br/>
+                Buildings,<br/>
+                Webbed Towers,<br/>
+                Solid Towers,<br/>
+                Power Cables,<br/>
+                Building";
             }
             else{
                 $obstructype = $data[$i];
@@ -267,7 +284,7 @@ function validateMidPoints($data){
         }
     }
 
-    if(count($err_msgs) < 0){
+    if(count($error_msgs) === 0){
         $_SESSION['distance'] = $distance;
         $_SESSION['groundheight'] = $groundheight;
         $_SESSION['terraintype'] = $terraintype;
@@ -275,14 +292,14 @@ function validateMidPoints($data){
         $_SESSION['obstructype'] = $obstructype;
     }
 
-    return $err_msgs;
+    return $error_msgs;
     
 }
 
 
-function insertPathway(){
-    print_r($_SESSION);
-    $db_conn = connectDB();
+function insertPathway( $db_conn ){
+    //print_r($_SESSION);
+ 
             
         if (!$db_conn){
 	        $status = "DBConnectionFail";
@@ -311,7 +328,7 @@ function insertPathway(){
                 $status = "OK";
             }
 		}
-		$db_conn = NULL;
+		
     }
     // if ($status != "OK"){
     //     //delete
@@ -322,9 +339,9 @@ function insertPathway(){
 
 }
 
-function insertPoints($point){
+function insertPoints($point, $db_conn ){
     
-    $db_conn = connectDB();
+    
             
         if (!$db_conn){
 	        $status = "DBConnectionFail";
@@ -356,7 +373,7 @@ function insertPoints($point){
                 //$status = "Execute Fail";
 			}
 		}
-		$db_conn = NULL;
+		
     }
 
 
@@ -366,26 +383,25 @@ function insertPoints($point){
 
 //function to insert valid midpoints into database !
 
-function insertValidMidpoints() {
-    $db_conn = connectDB();
-            
+function insertValidMidpoints( $db_conn ) {
+
         if (!$db_conn){
 	        $status = "DBConnectionFail";
             } 
         else {
-		    $stmt = $db_conn->prepare("insert into pathway ( pathname, opfrq, description, note, pathfile) values(?,?,?,?,?)");
+		    $stmt = $db_conn->prepare("insert into midpoint ( distance, groundheight, terraintype, obstrucheight, obstructype) values(?,?,?,?,?)");
 		    if (!$stmt){
 			    $status = "PrepareFail";
             } 
             else {
-            $pathname = $_SESSION['pathname'];
-            $opfrq = $_SESSION['pathname'];
-            $description = $_SESSION['description'];
-            $note = $_SESSION['note'];
-            $pathfile = $_SESSION['store_file_name'];
+            $distance = $_SESSION['distance'];
+            $groundheight = $_SESSION['groundheight'];
+            $terraintype = $_SESSION['terraintype'];
+            $obstrucheight = $_SESSION['obstrucheight'];
+            $obstructype = $_SESSION['obstructype'];
 			//encodes data for the security
 			//$content = base64_encode(file_get_contents($_FILES['uploads']['tmp_name']));
-			$data = array($pathname, $opfrq, $description, $note, $pathfile);
+			$data = array($distance, $groundheight, $terraintype, $obstrucheight, $obstructype);
 			$result = $stmt->execute($data);
 			if(!$result){
                 $status = "Error".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
@@ -393,12 +409,12 @@ function insertValidMidpoints() {
                 //$status = "Execute Fail";
 			}
 		}
-		$db_conn = NULL;
+		
     }
-    if ($status != "OK"){
-        //delete
-        unlink($pathfile);
-        }
+    // if ($status != "OK"){
+    //     //delete
+    //     unlink($pathfile);
+    //     }
 
 	return $status;
 
