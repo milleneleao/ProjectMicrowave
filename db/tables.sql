@@ -15,7 +15,7 @@ CREATE TABLE `pathway` (
   `pathfile` varchar(100) NOT NULL,
   PRIMARY KEY (`idpathway`)
 ); 
-
+insert into pathway(pathname,opfrq,description,note,pathfile)values("ss",0,"dddd","dddd","ssss");
 
 CREATE TABLE `points` (
   `idpoints`   int(11) NOT NULL AUTO_INCREMENT,

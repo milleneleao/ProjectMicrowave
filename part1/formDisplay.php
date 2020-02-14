@@ -29,12 +29,13 @@
               <div class="col-3"></div>
               <div class="col-6 text-center">
 
-		 <FORM method="POST" id="displayForm">
+		 <form method="POST" id="displayForm">
+
 			<table class="table table-bordered">
 			<thead class="thead-light">
   			  <tr>
+				<th scope="col"></th>
                 <th scope="col">Path Name</th>
-  			    <th scope="col"></th>
   			  </tr>
   			</thead>
 			<tbody>  
@@ -53,14 +54,8 @@
 		if ($stmt->rowCount() > 0){
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){ ?>
 			<tr>
-	   			<td><?php echo $row['pathname']; ?></td>
-                <th scope="row">
-				<!-- <td><?php echo $row['pathname']; ?><td><button class="btn btn-sm btn-primary display_class" id=.<?php echo $row['idpathway']; ?> >Display</button>
-				<button class="btn btn-sm btn-primary resert_class" id=.<?php echo $row['idpathway']; ?> >Reset</button></td></tr>";
-					 -->
-				<input type="submit" class='btn btn-primary display' data-id=<?php echo $row['idpathway']; ?>" value="Display" class="btn btn-primary">
-				<input type="submit" class='btn btn-primary reset'   data-id=<?php echo $row['idpathway']; ?>" value="Reset" class="btn btn-primary"> 
-				 </th>
+     			<th scope="row"><input type="radio" name="list_select" value="<?php echo $row['idpathway']; ?>"></th>
+	   			<td><?php echo $row['pathname']; ?></td>																																																																																																																																																																																																																																																																																																																																
 			</tr>
 <?php $db_conn = NULL; } ?>
 
@@ -81,10 +76,16 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){ ?>
 
 ?>
   </tbody>
+
   </table>
-  </FORM>
+  <div class="col-12 py-2" style="text-align: center;">
+      <button type="button" class="btn btn-success" id="display_btn" >Display</button>
+      <button type="button"  class="btn btn-success" id="reset_btn">Reset</button>
+    </div>
+  </form>
     <div class="col-3"></div>
             </div>
+			<div  class="col-lg-12 pt-5" style="text-align: center;" id="div1" ></div>
             <div class="col-lg-12 pt-5" style="text-align: center;">
               <a href="../index.php">Return to menu</a>
             </div>

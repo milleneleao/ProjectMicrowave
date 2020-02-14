@@ -140,14 +140,19 @@
             echo "Line ".$count_line."  <br />";
             switch ($count_line) {
               case 1: // First Line - Information about Path table
-                validatePathway($line);
-
+                  clearSession();
+                  validatePath($line);
+                  insertPathway();
                   break;
               case 2: // Second Line - Information about Point table - Start Point 
+                  clearSession();
                   validatePoint($line,"start");
+                  insertPoints("start");
                   break;
               case 3: // Second Line - Information about Point table
-                  validatePoint($line,"end"); 
+                  clearSession();
+                  validatePoint($line,"end");
+                  insertPoints("end"); 
                   break;
               default:
                   validateMidPoints($line);
