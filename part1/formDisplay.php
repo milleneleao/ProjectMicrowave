@@ -24,6 +24,9 @@
           <div class="col-12 bg-dark p-5"> 
 	  		    <h1 class="text-center text-light "> Winter 2020 Project - Microwave Radio Path Web Site</h1> 
 	      </div>
+          <div class="col-lg-12 pt-5" style="text-align: center;">
+             <h3> <a href="../index.php">Return to menu</a></h3>
+            </div>
           <div class="col-12 ">
             <div class="row  pt-5">
               <div class="col-3"></div>
@@ -86,9 +89,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){ ?>
     <div class="col-3"></div>
             </div>
 			<div  class="col-lg-12 pt-5" style="text-align: center;" id="div1" ></div>
-            <div class="col-lg-12 pt-5" style="text-align: center;">
-              <a href="../index.php">Return to menu</a>
-            </div>
+
 			<div >
 	  	    </div>
 

@@ -9,13 +9,13 @@ use microwave;
 CREATE TABLE `pathway` (
   `idpathway` int(11) NOT NULL AUTO_INCREMENT,
   `pathname` varchar(100) NOT NULL UNIQUE, 
-  `opfrq` float NOT NULL, -- 1 util 100 valided
+  `opfrq` double NOT NULL, -- 1 util 100 valided
   `description` varchar(255) NOT NULL,
   `note` text,
   `pathfile` varchar(100) NOT NULL,
   PRIMARY KEY (`idpathway`)
 ); 
-insert into pathway(pathname,opfrq,description,note,pathfile)values("ss",0,"dddd","dddd","ssss");
+
 
 CREATE TABLE `points` (
   `idpoints`   int(11) NOT NULL AUTO_INCREMENT,

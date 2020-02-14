@@ -15,6 +15,6 @@
 	}
 
 	function disconnect_db($db_conn){
-		$db_conn->close();
+		$db_conn = null;
 	}
 ?>

@@ -111,8 +111,9 @@ $(document).ready(function(){
               'id': id,
             },
             success: function(response){
-             console.log(response);  
-             location.reload(); 
+              alert(response.status);
+              console.log(response);
+              location.reload(); 
             }
         });
     });
