@@ -1,4 +1,11 @@
 <?php
+// <!-- 
+// 	File:    db_connection.php
+// 	Purpose: Database Conncetion and desconnect Functions 
+// 	Authors: Millene L B S Cesconetto
+// 			 Olha Tymoshchuk
+// 			 Omar Rafik
+// -->
 	define("DBHOST", "localhost");
 	define("DBDB",   "microwave");
 	define("DBUSER", "microwaveuser");

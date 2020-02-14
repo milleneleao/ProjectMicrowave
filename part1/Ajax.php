@@ -1,5 +1,12 @@
 <?php
-
+// <!-- 
+// File:    Ajax.php
+// Purpose: page requested by Ajax.js. Returns an array with data when the request is "Display" 
+//          and returns a status array when the function is "Reset"
+// Authors: Millene L B S Cesconetto
+//          Olha Tymoshchuk
+//          Omar Rafik
+// -->
 header("Content-Type: application/json");
 require_once("./dbFunctions.php");
 require_once("../db/db_connection.php");

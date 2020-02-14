@@ -1,3 +1,12 @@
+/*
+<!-- 
+File:    Ajax.js
+Purpose: functions of the java script
+Authors: Millene L B S Cesconetto
+         Olha Tymoshchuk
+         Omar Rafik
+-->
+*/
 $(document).ready(function(){
     // Display data
     $(document).on('click', '#display_btn', function(){
