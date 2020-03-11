@@ -24,7 +24,7 @@ $(document).on('click', '#update_btn', function(){
       url: 'Ajax.php',
       type: 'POST',
       data: {
-        'update': 1,
+        'select': 1,
         'id': id,
       },
       success: function(response){
@@ -58,11 +58,12 @@ $(document).on('click', '#update_btn', function(){
     }
 
         $("#div2").html(`
-        <table class="table">
+        <table class="table" id="tablePathwayRoot">
         <tr>
           <td colspan="5" align="Center" class="bg-light">Pathway</td>
         </tr>
         <tr>
+          <th scope="col" hidden>ID</th>
           <th scope="col">Path Name</th>
           <th scope="col">Operating Frequency</th>
           <th scope="col">Description</th>
@@ -70,19 +71,24 @@ $(document).on('click', '#update_btn', function(){
           <th scope="col">File Name</th>
         </tr>
         
-        <tr>
-          <td>${response.pathway[0].pathname}</td>
-          <td id="tablePathway" contenteditable="false">${response.pathway[0].opfrq}</td>
-          <td id="tablePathway" contenteditable="false">${response.pathway[0].description}</td>
-          <td id="tablePathway" contenteditable="false">${response.pathway[0].note}</td>
+        <tr id="idpathway">
+          <td id="tablePathway_idpatway" hidden>${response.pathway[0].idpathway}</td>
+          <td id="tablePathway_pathname">${response.pathway[0].pathname}</td>
+          <td id="tablePathway_opfrq" contenteditable="false">${response.pathway[0].opfrq}</td>
+          <td id="tablePathway_description" contenteditable="false">${response.pathway[0].description}</td>
+          <td id="tablePathway_note" contenteditable="false">${response.pathway[0].note}</td>
           <td>${response.pathway[0].pathfile}</td>
-        </tr></table>
+        </tr>
+
+        </table>
+
+               
         </br>
         <button type="button" class="btn btn-primary" id="updatePathway_btn">Allow edit</button>
         <button type="button" class="btn btn-success" id="savePathway_btn">Save changes</button>
         <button type="button" class="btn btn-danger"  id="cancelPathway_btn">Cancel</button>
         </br></br>
-       
+
         <table class="table" id="table">
         <td colspan="5" align="Center" class="bg-light">Points</td>
         <tr>
@@ -120,14 +126,58 @@ $(document).on('click', '#update_btn', function(){
   
   $(document).on('click', '#updatePathway_btn', function(){
     $("[id]").each(function(){
-      if($(this).attr("id")=="tablePathway"){
+      let str = $(this).attr("id");
+      str = str.slice(0,str.indexOf('_'));
+      if("tablePathway"== str){
         var value = $(this).attr("contenteditable");
         if (value == "false") {
           $(this).attr('contenteditable',"true");
         }
       }
      });
-
   });
+
+  $(document).on('click','#savePathway_btn', function(){
+    var array = [];
+    $('#tablePathwayRoot tr').each(function() {
+      if(this.id == 'idpathway'){
+        var currentrow = $(this);
+        var idpathway = currentrow.find("td:eq(0)").text();
+        var pathwayName = currentrow.find("td:eq(1)").text();
+        var opfrq = currentrow.find("td:eq(2)").text();
+        var description = currentrow.find("td:eq(3)").text();
+        var note = currentrow.find("td:eq(4)").text();
+        array.push(idpathway,pathwayName,opfrq,description,note);
+        console.log(array);
+      }
+    });
+
+    $.ajax({
+      url: 'Ajax.php',
+      type: 'POST',
+      data: {
+        'update': 1,
+        'data': array,
+      },
+      success: function(response){
+        console.log(response);   
+        if (response.status == 'Ok'){
+          alert(response.error_msg);
+          location.reload(); 
+        }else {
+          var msg = "";
+          for(var i=0;i<response.error_msg.length;i++){
+            msg += `${response.error_msg[i]} \n`
+          }
+          alert(msg);
+        }
+       }
+    });
+  })
+
+  $(document).on('click','#cancelPathway_btn', function(){
+    alert("All  changes won't be save!!s");         
+    location.reload();
+  })
 
 });

@@ -464,4 +464,40 @@ function insertValidMidpoints( $db_conn ) {
 
 }
 
+
+
+//Update Functions
+//Update Pathway
+function updatePathway($db_conn, $data){
+    if (!$db_conn){
+        $status = "File upload failed - Error connecting to the database";
+        } 
+    else {
+        $stmt = $db_conn->prepare("update pathway set opfrq=?, description=?, note=? where idpathway = ?");
+        if (!$stmt){
+            $status = "Error getting pathway ready to insert data into the database";
+        } 
+        else {
+  
+        $idpath      = $data[0];
+        $opfrq       = $data[2];
+        $description = $data[3];
+        $note        = $data[4];
+     
+        $data = array($opfrq, $description, $note, $idpath);
+       
+        $result = $stmt->execute($data);
+        if(!$result){
+            
+            $status = "Error ".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
+        }
+        else{
+            $status = "OK";
+        }
+    }
+    
+}
+return $status;
+}
+
 ?>
