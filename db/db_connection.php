@@ -1,7 +1,7 @@
 <?php
 // <!-- 
 // 	File:    db_connection.php
-// 	Purpose: Database Conncetion and desconnect Functions 
+// 	Purpose: Database Conncetion and disconnect Functions 
 // 	Authors: Millene L B S Cesconetto
 // 			 Olha Tymoshchuk
 // 			 Omar Rafik

@@ -24,6 +24,7 @@
 			<div class="list-group">
   				<a href="./part1/upload.php" class="list-group-item"> <h4>Upload microwave path data in a CSV to Database</h4></a>
   				<a href="./part1/formDisplay.php" class="list-group-item"><h4>Display the data </h4></a>
+				<a href="./part2/editDisplay.php" class="list-group-item"><h4>Edit the data </h4></a>
 			</div>
 		</div>
 

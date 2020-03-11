@@ -7,8 +7,10 @@ Authors: Millene L B S Cesconetto
          Omar Rafik
 -->
 */
+//The .ready() method offers a way to run JavaScript code as soon as the page's Document Object Model (DOM) becomes safe to manipulate.
 $(document).ready(function(){
     // Display data
+    //The .on() method attaches event handlers to the currently selected set of elements in the jQuery object. 
     $(document).on('click', '#display_btn', function(){
         var id  = $('input[name=list_select]:checked').val()
         console.log(id);
@@ -33,7 +35,7 @@ $(document).ready(function(){
             for(var i=0;i < response.points.length; i++){
               points += `<tr>`;  
               if(response.points[i].startpoint != null){
-                points += ` <td>${response.points[i].startpoint}</td>`
+                points += ` <td contenteditable="true">${response.points[i].startpoint}</td>`
               } else {
                 points += ` <td>${response.points[i].endpoint}</td>`
               }
@@ -99,7 +101,10 @@ $(document).ready(function(){
           </table>` );
           }
         });
-      });
+      });//end of display data
+//----------------------------------------------------------------------------------------------------------------------------------
+      //Update
+      
 
     //Reset data
     $(document).on('click', '#reset_btn', function(){
@@ -127,4 +132,38 @@ $(document).ready(function(){
         });
     });
     
+});
+
+//-----------------------------------------------------
+//get changes 
+var $TABLE = $('#table');
+var $BTN = $('#changes_btn');
+jQuery.fn.pop = [].pop;
+jQuery.fn.shift = [].shift;
+
+$BTN.click(function () {
+  var $rows = $TABLE.find('tr');
+  var headers = [];
+  var data = [];
+  
+  // Get the headers (add special header logic here)
+  $($rows.shift()).find('th:not(:empty)').each(function () {
+    headers.push($(this).text().toLowerCase());
+  });
+  
+  // Turn all existing rows into a loopable array
+  $rows.each(function () {
+    var $td = $(this).find('td');
+    var h = {};
+    
+    // Use the headers from earlier to name our hash keys
+    headers.forEach(function (header, i) {
+      h[header] = $td.eq(i).text();   
+    });
+    
+    data.push(h);
+  });
+  
+  // Output the result
+  console.log(JSON.stringify(data));
 });
