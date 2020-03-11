@@ -2,6 +2,7 @@ drop database if exists microwave;
 
 CREATE DATABASE `microwave` charset=utf8;
 
+drop user if exists 'microwave'@'localhost';
 GRANT ALL PRIVILEGES ON `microwave`.* TO 'microwaveuser'@'localhost' identified by '!Lamp12!';
 
 use microwave;

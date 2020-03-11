@@ -8,7 +8,7 @@
 //          Omar Rafik
 // -->
 header("Content-Type: application/json");
-require_once("../part1/dbFunctions.php");
+require_once("../db/dbFunctions.php");
 require_once("../db/db_connection.php");
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -21,9 +21,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         $stmt = $db_conn->prepare($qry);
         $status = $stmt->execute($field_data);
         if ($stmt->rowCount() > 0){
-            $result = array("status" => "OK");
+            $result = array("status" => "OK"); 
             $result['pathway'] = array();
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){ 
                 array_push($result['pathway'], $row);
             }
       

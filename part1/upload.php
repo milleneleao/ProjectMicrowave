@@ -1,7 +1,7 @@
 <?php 
   session_start();
   require_once("../db/db_connection.php");
-  require_once("dbFunctions.php"); 
+  require_once("../db/dbFunctions.php"); 
 ?>
 <!-- 
 	File:    index.php
