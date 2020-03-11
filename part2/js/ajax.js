@@ -118,7 +118,6 @@ $(document).on('click', '#update_btn', function(){
   });//end of update table
   $(document).on('click', '#updatePathway_btn', function(){
     var value = $('#tablePathway').attr('contenteditable');
-    
       if (value == "false") {
         $('#tablePathway').attr('contenteditable',"true");
       }
