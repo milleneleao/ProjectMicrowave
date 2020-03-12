@@ -464,4 +464,6 @@ function insertValidMidpoints( $db_conn ) {
 
 }
 
+function updatePathway($db_conn, $)
+
 ?>

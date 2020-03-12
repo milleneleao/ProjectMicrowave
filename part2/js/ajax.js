@@ -57,11 +57,14 @@ $(document).on('click', '#update_btn', function(){
         }
     }
 
-        $("#div2").html(`<table class="table">
+        $("#div2").html(`
+        <table class="table" id="tablePathwayRoot">
         <tr>
           <td colspan="5" align="Center" class="bg-light">Pathway</td>
         </tr>
         <tr>
+        <th>ID</th>
+        <th scope="col">Path Name</th>
           <th scope="col">Path Name</th>
           <th scope="col">Operating Frequency</th>
           <th scope="col">Description</th>
@@ -69,18 +72,19 @@ $(document).on('click', '#update_btn', function(){
           <th scope="col">File Name</th>
         </tr>
         
-        <tr>
+        <tr id="pathway">
+          <td id="tablePathway_id" hidden>${response.pathway[0].idpathway}</td>
           <td>${response.pathway[0].pathname}</td>
-          <td id="tablePathway" contenteditable="false">${response.pathway[0].opfrq}</td>
-          <td id="tablePathway" contenteditable="false">${response.pathway[0].description}</td>
-          <td id="tablePathway" contenteditable="false">${response.pathway[0].note}</td>
-          <td id="tablePathway" contenteditable="false">${response.pathway[0].pathfile}</td>
-          
+          <td id="tablePathway_opfrq" contenteditable="false">${response.pathway[0].opfrq}</td>
+          <td id="tablePathway_description" contenteditable="false">${response.pathway[0].description}</td>
+          <td id="tablePathway_note" contenteditable="false">${response.pathway[0].note}</td>
+          <td>${response.pathway[0].pathfile}</td>
         </tr></table>
         </br>
-        <button type="button" class="btn btn-success" id="updatePathway_btn">Allow edit</button>
+        <button type="button" class="btn btn-primary" id="updatePathway_btn">Allow edit</button>
         <button type="button" class="btn btn-success" id="savePathway_btn">Save changes</button>
-        </br>
+        <button type="button" class="btn btn-danger"  id="cancelPathway_btn">Cancel</button>
+        </br></br>
        
         <table class="table" id="table">
         <td colspan="5" align="Center" class="bg-light">Points</td>
@@ -116,11 +120,39 @@ $(document).on('click', '#update_btn', function(){
       }
     });
   });//end of update table
+  
   $(document).on('click', '#updatePathway_btn', function(){
-    var value = $('#tablePathway').attr('contenteditable');
-      if (value == "false") {
-        $('#tablePathway').attr('contenteditable',"true");
+    $("[id]").each(function(){
+      let str = $(this).attr("id");
+      str = str.slice(0,str.indexOf('_'));
+      if("tablePathway"==str){
+        var value = $(this).attr("contenteditable");
+        if (value == "false") {
+          $(this).attr('contenteditable',"true");
+        }
       }
-  });
+     });
+  });//end of edit function
+ 
 
+  $(document).on('click', '#savePathway_btn', function(){
+    $("#tablePathwayRoot tr").each(function(){
+      if(this.id === "pathway"){
+        var currentRow=$(this);
+    
+        var tablePathway_opfrq=currentRow.find("td:eq(1)").text();
+        var tablePathway_description=currentRow.find("td:eq(2)").text();
+        var tablePathway_note=currentRow.find("td:eq(3)").text();
+        console.log(tablePathway_opfrq); 
+        console.log(this);
+      } 
+    });
+  //   $.ajax({
+  //     url: 'Ajax.php',
+  //     type: 'POST',
+  //     data: {
+  //       'update': 1,
+  //       'id': id,
+  //     },
+   }); 
 });

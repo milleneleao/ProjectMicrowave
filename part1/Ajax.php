@@ -8,7 +8,7 @@
 //          Omar Rafik
 // -->
 header("Content-Type: application/json");
-require_once("./dbFunctions.php");
+require_once("../db/dbFunctions.php");
 require_once("../db/db_connection.php");
 
 if(isset($_POST['display'])){
