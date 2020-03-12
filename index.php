@@ -24,10 +24,14 @@
 			<div class="list-group">
   				<a href="./part1/upload.php" class="list-group-item"> <h4>Upload microwave path data in a CSV to Database</h4></a>
   				<a href="./part1/formDisplay.php" class="list-group-item"><h4>Display the data </h4></a>
+			</div>
+		</div>
+        <div class="col-12 p-5 ">
+		   <h2 class="text-center display-4">Part 2</h2>
+			<div class="list-group">
 				<a href="./part2/editDisplay.php" class="list-group-item"><h4>Edit the data </h4></a>
 			</div>
 		</div>
-
 		
 	  </div>
 	</div>  

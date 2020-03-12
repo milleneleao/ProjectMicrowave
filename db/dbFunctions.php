@@ -478,26 +478,61 @@ function updatePathway($db_conn, $data){
             $status = "Error getting pathway ready to insert data into the database";
         } 
         else {
-  
-        $idpath      = $data[0];
-        $opfrq       = $data[2];
-        $description = $data[3];
-        $note        = $data[4];
-     
-        $data = array($opfrq, $description, $note, $idpath);
-       
-        $result = $stmt->execute($data);
-        if(!$result){
+            $idpath      = $data[0];
+            $opfrq       = $data[2];
+            $description = $data[3];
+            $note        = $data[4];
             
-            $status = "Error ".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
+            $data = array($opfrq, $description, $note, $idpath);
+            
+            $result = $stmt->execute($data);
+            if(!$result){
+
+                $status = "Error ".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
+            }
+            else{
+                $status = "OK";
+            }
         }
-        else{
-            $status = "OK";
-        }
-    }
     
+    }
+    return $status;
 }
-return $status;
+
+
+
+
+//Update Pathway
+function updateMidPoints($db_conn, $data){
+    if (!$db_conn){
+        $status = "File upload failed - Error connecting to the database";
+        } 
+    else {
+        $stmt = $db_conn->prepare("update midpoint set groundheight=?, terraintype=?, obstrucheight=?, obstructype=? where idmidPoint = ?");
+        if (!$stmt){
+            $status = "Error getting midpoint ready to insert data into the database";
+        } 
+        else {
+            $idmidPoint    = $data[0];
+            $groundheight  = $data[2];
+            $terraintype   = $data[3];
+            $obstrucheight = $data[4];
+            $obstructype   = $data[5];
+
+            $data = array($groundheight, $terraintype, $obstrucheight,$obstructype, $idmidPoint);
+            
+            $result = $stmt->execute($data);
+            if(!$result){
+
+                $status = "Error ".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
+            }
+            else{
+                $status = "OK";
+            }
+        }
+    
+    }
+    return $status;
 }
 
 ?>

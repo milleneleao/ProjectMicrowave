@@ -141,8 +141,9 @@
           $handle  = fopen($newName, "r");
           $count_line = 1;
           $db_conn = connectDB();
+          $db_conn->setAttribute(PDO::ATTR_AUTOCOMMIT,0);
           $db_conn->beginTransaction();
-         
+   
           while  ($line  = fgetcsv($handle, 1000, ","))  {
             if($count_line == 1){
               $error_msg = validatePathway($line,$count_line);
@@ -194,7 +195,11 @@
             if ($count_line > 3){
               $error_msg = validateMidPoints($line,$count_line);
               if(count($error_msg) === 0){
-                insertValidMidpoints( $db_conn,$count_line );
+                $status = insertValidMidpoints( $db_conn,$count_line );
+                if($status !== 'OK'){
+                  $error_msg[] = $status; 
+                  break;
+                }
                 clearSession();
               }
               else{
@@ -207,12 +212,14 @@
 
           if(count($error_msg) === 0) {
             $db_conn->commit();
+            disconnect_db($db_conn);
           }
           else{
             $db_conn->rollback();
+            disconnect_db($db_conn);
              unlink($newName);
           }
-          $db_conn = NULL;     
+    
         }
       }
       return $error_msg;
