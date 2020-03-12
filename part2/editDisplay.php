@@ -17,31 +17,30 @@
 	  <script src="js/ajax.js"></script> 
   </head>
   <body>
-  <div class="container-fluid" id="div2">
+  <div class="container-fluid" >
 	    <div class="content">
-        <div class="row ">
+        <div class="row">
         <div class="col-2"> </div>
-          <div class="col-12 bg-dark p-5"> 
+        <div class="col-12 bg-dark p-5"> 
 	  		    <h1 class="text-center text-light "> Winter 2020 Project - Microwave Radio Path Web Site</h1> 
-	      </div>
-          <div class="col-lg-12 pt-5" style="text-align: center;">
-             <h3> <a href="../index.php">Return to menu</a></h3>
-            </div>
-          <div class="col-12 ">
+	    </div>
+		<div class="col-lg-12 mb-auto" id="div2">
+        <div class="col-lg-12 pt-5" style="text-align: center;">
+           <h3> <a href="../index.php">Return to menu</a></h3>
+        </div>
+        <div class="col-12 " >
             <div class="row  pt-5">
               <div class="col-3"></div>
               <div class="col-6 text-center">
-
-		 <form method="POST" id="updateForm">
-
-			<table class="table table-bordered">
-			<thead class="thead-light">
-  			  <tr>
-				<th scope="col"></th>
-                <th scope="col">Path Name</th>
-  			  </tr>
-  			</thead>
-			<tbody>  
+		 	    <form method="POST" id="updateForm">
+					<table class="table table-bordered">
+						<thead class="thead-light">
+  			  				<tr>
+						    <th scope="col"></th>
+              				  <th scope="col">Path Name</th>
+  			  				</tr>
+  						</thead>
+						<tbody>  
 <?php
     $db_conn = connectDB();
 	$field_data = array();
@@ -55,19 +54,18 @@
 	$status = $stmt->execute($field_data);
 	if ($status){
 		if ($stmt->rowCount() > 0){
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){ ?>
-			<tr>
-     			<th scope="row"><input type="radio" name="list_select" value="<?php echo $row['idpathway']; ?>"></th>
-	   			<td><?php echo $row['pathname']; ?></td>																																																																																																																																																																																																																																																																																																																																
-			</tr>
-<?php $db_conn = NULL; } ?>
-
-<?php
-	} else {
+			while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){ 
 ?>
-			<div>
-			<p>No contacts to display</p>
-			</div>
+						<tr>
+     						<th scope="row"><input type="radio" name="list_select" value="<?php echo $row['idpathway']; ?>"></th>
+	   						<td><?php echo $row['pathname']; ?></td>																																																																																																																																																																																																																																																																																																																																
+						</tr>
+<?php 		$db_conn = NULL; } 
+		} else {
+?>
+							<div>
+							<p>No contacts to display</p>
+							</div>
 <?php
         }
         
@@ -78,24 +76,25 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){ ?>
 	}
 
 ?>
-  </tbody>
-
-  </table>
-  <div class="col-12 py-2" style="text-align: center;">
-      
-	  <button type="button" class="btn btn-success" id="update_btn">Update</button>
-      
-    </div>
-  </form>
-    <div class="col-3"></div>
-            </div>
-			<div  class="col-lg-12 pt-5" style="text-align: center;" id="div1" ></div>
-
-			<div >
-	  	    </div>
-
-        </div>
-      </div>
-    </div>  
+                 		</tbody>
+                  	</table>
+    				<div class="col-12 py-2" style="text-align: center;">
+					  <button type="button" class="btn btn-success" id="update_btn">Update</button>
+    				</div>
+  				</form>
+    		  <div class="col-3"></div>
+              </div>
+			  </div>
+			<div  class="col-12 mb-auto "   >
+       			 <div class="row  pt-5">
+          			<div class="col-3"></div>
+          			<div class="col-6 text-center" id="div1">
+					</div>
+				</div>	
+			</div>
+			<div></div>
+        </div><!--row-->
+      </div><!--content-->
+    </div><!-- content-fluid-->  
  </body>
  </html>
