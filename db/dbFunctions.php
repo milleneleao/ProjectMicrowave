@@ -246,7 +246,7 @@ function validateMidPoints($data,$line){
                 $error_msgs[] =  $msg ."the field is requires";
             break;
             }
-            else if(strlen($data[$i]) > 50){
+            else if(!is_numeric($data[$i])){
                 $error_msgs[] =  $msg ."The value should be numeric";
             break;
             }

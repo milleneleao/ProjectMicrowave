@@ -79,7 +79,7 @@
                  		</tbody>
                   	</table>
     				<div class="col-12 py-2" style="text-align: center;">
-					  <button type="button" class="btn btn-success" id="update_btn">Update</button>
+					  <button type="button" class="btn btn-success" id="update_btn">Edit</button>
     				</div>
   				</form>
     		  <div class="col-3"></div>
