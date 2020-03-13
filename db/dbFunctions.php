@@ -499,8 +499,52 @@ function updatePathway($db_conn, $data){
     return $status;
 }
 
+//Update Points
 
+function updatePoints($db_conn, $data){
+    if (!$db_conn){
+        $status = "File upload failed - Error connecting to the database";
+        } 
+    else {
+        $idpoints       = $data[0];
+        $idsPoint       = $data[1];
+        $endpoint       = $data[2];
+        $groundheight   = $data[3];
+        $antennaheight  = $data[4];
+        $antennatype    = $data[5];
+        $antennalength  = $data[6];
 
+        if ($idsPoint == 'start'){
+            $stmt = $db_conn->prepare("update points set groundheight=?, antennaheight=?, antennatype=?, antennalength=? where idpoints = ?");
+        }else{
+            $stmt = $db_conn->prepare("update points set endpoint=?, groundheight=?, antennaheight=?, antennatype=?, antennalength=? where idpoints = ?");
+  
+        }
+
+        if (!$stmt){
+            $status = "Error getting midpoint ready to insert data into the database";
+        } 
+        else {
+            if ($idsPoint == 'start'){
+                $data = array($groundheight, $antennaheight,$antennatype,$antennalength, $idpoints);
+        
+            }else{
+              $data = array($endpoint, $groundheight, $antennaheight,$antennatype,$antennalength, $idpoints);
+            }
+            
+            $result = $stmt->execute($data);
+            if(!$result){
+
+                $status = "Error ".$stmt->errorCode()."\nMessage ".implode($stmt->errorInfo())."\n";
+            }
+            else{
+                $status = "OK";
+            }
+        }
+    
+    }
+    return $status;
+}
 
 //Update Pathway
 function updateMidPoints($db_conn, $data){

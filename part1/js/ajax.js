@@ -40,7 +40,7 @@ $(document).ready(function(){
                 points += ` <td>${response.points[i].endpoint}</td>`
               }
               points += ` <td>${response.points[i].groundheight}</td>
-                             <td>${response.points[i].antennatype}</td>
+                             <td>${response.points[i].antennaheight}</td>
                              <td>${response.points[i].antennatype}</td>
                              <td>${response.points[i].antennalength}</td></tr>`;
             }

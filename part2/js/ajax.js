@@ -32,16 +32,19 @@ $(document).on('click', '#update_btn', function(){
         var points = "";
         if(response.points != undefined){
         for(var i=0;i < response.points.length; i++){
-          points += `<tr>`;  
+          points += `<tr id="trPoint">`;  
+          points += ` <td id="tdPoint" hidden>${response.points[i].idpoints}</td>`
           if(response.points[i].startpoint != null){
-            points += ` <td>${response.points[i].startpoint}</td>`
+            points += ` <td id="tdPoint" hidden>start</td>`
+            points += ` <td id="tdPoint">${response.points[i].startpoint}</td>`
           } else {
-            points += ` <td contenteditable="false">${response.points[i].endpoint}</td>`
+            points += ` <td id="tdPoint" hidden>end</td>`
+            points += ` <td id="tdPoint" contenteditable="false">${response.points[i].endpoint}</td>`
           }
-          points += ` <td contenteditable="false">${response.points[i].groundheight}</td>
-                         <td contenteditable="false">${response.points[i].antennatype}</td>
-                         <td contenteditable="false">${response.points[i].antennatype}</td>
-                         <td contenteditable="false">${response.points[i].antennalength}</td></tr>`;
+          points += ` <td id="tdPoint" contenteditable="false">${response.points[i].groundheight}</td>
+                         <td id="tdPoint" contenteditable="false">${response.points[i].antennaheight}</td>
+                         <td id="tdPoint" contenteditable="false">${response.points[i].antennatype}</td>
+                         <td id="tdPoint" contenteditable="false">${response.points[i].antennalength}</td></tr>`;
           }
         }
 
@@ -97,9 +100,11 @@ $(document).on('click', '#update_btn', function(){
 
         <div class="row  pt-5">
           <div class="col-12 text-center">
-            <table class="table" id="table">
+            <table class="table" id="tablePoits">
               <td colspan="5" align="Center" class="bg-light">Points</td>
               <tr>
+               <th scope="col" hidden>ID</th>
+               <th scope="col" hidden>Start</th>
                <th scope="col">Point</th>
                <th scope="col">Ground Height</th>
                <th scope="col">Antenna Height</th>
@@ -144,6 +149,7 @@ $(document).on('click', '#update_btn', function(){
     });
   });//end of update table
   
+  //PATHWAY FUNCTIONS ---------------------------------------------------------------------------------------------------------------------
   $(document).on('click', '#updatePathway_btn', function(){
     $("[id]").each(function(){
       if("tdPathway"==  $(this).attr("id")){
@@ -195,14 +201,72 @@ $(document).on('click', '#update_btn', function(){
   });
 
   $(document).on('click','#cancelPathway_btn', function(){
-    alert("All  changes won't be save!!s");         
+    alert("All  changes won't be saved!!");         
     location.reload();
   });
 
+  //POINTS FUNCTIONS--------------------------------------------------------------------------------------------------------------------
+  //EDIT BUTTON
+  $(document).on('click', '#updatePoints_btn', function(){
 
+    $("[id]").each(function(){
+      if("tdPoint"==  $(this).attr("id")){
+        var value = $(this).attr("contenteditable");
+        if (value == "false") {
+          $(this).attr('contenteditable',"true");
+        }
+      }
+     });
+  });
 
+  //save points
+  $(document).on('click','#savePoints_btn', function(){
+    var array = [];
+    $('#tablePoits tr').each(function() {
+      if(this.id == 'trPoint'){
+        var currentrow  = $(this);
+        var idpoints   = currentrow.find("td:eq(0)").text();
+        var spoint     = currentrow.find("td:eq(1)").text();
+        var point = currentrow.find("td:eq(2)").text();
+        var groundheight  = currentrow.find("td:eq(3)").text();
+        var antennaheight  = currentrow.find("td:eq(4)").text();
+        var antennatype  = currentrow.find("td:eq(5)").text();
+        var antennalength    = currentrow.find("td:eq(6)").text();
+        var rowArray = [];
+        rowArray.push(idpoints,spoint,point,groundheight,antennaheight,antennatype,antennalength);
+        array.push(rowArray);
+      }
+    });
+    console.log(array);
+    $.ajax({
+      url: 'Ajax.php',
+      type: 'POST',
+      data: {
+        'update': 2,
+        'data': array,
+      },
+      success: function(response){
+        console.log(response);   
+        if (response.status == 'Ok'){
+          alert(response.error_msg);
+          location.reload(); 
+        }else {
+          var msg = "";
+          for(var i=0;i<response.error_msg.length;i++){
+            msg += `${response.error_msg[i]} \n`
+          }
+          alert(msg);
+        }
+       }
+    });
+  });
+  //cancel button
+  $(document).on('click','#cancelPoints_btn', function(){
+    alert("All  changes won't be saved!!");         
+    location.reload();
+  });
 
-  // MIDPOINTS FUNCTIONS
+  // MIDPOINTS FUNCTIONS-----------------------------------------------------------------------------------------------------------------
   $(document).on('click', '#updateMidpoints_btn', function(){
 
     $("[id]").each(function(){
@@ -259,7 +323,7 @@ $(document).on('click', '#update_btn', function(){
 
 
   $(document).on('click','#cancelMidpoint_btn', function(){
-    alert("All  changes won't be save!!s");         
+    alert("All  changes won't be saved!!");         
     location.reload();
   });
 

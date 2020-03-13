@@ -92,6 +92,41 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         } else
         //Update Points
         if ($_POST['update'] == 2){
+            $db_conn = connectDB();  
+            $db_conn->setAttribute(PDO::ATTR_AUTOCOMMIT,0);
+            $db_conn->beginTransaction();
+            $data = $_POST['data'];
+            $error_msg = [];
+            
+            for ($x = 0; $x < count($data); $x++) {
+                $line = [];
+                $arrayLine = $data[$x];
+                array_push($line,$arrayLine[2],$arrayLine[3],$arrayLine[4],$arrayLine[5],$arrayLine[6]);
+                $error_msg = validatePoint($line,$arrayLine,$x);
+                if(count($error_msg) === 0){
+                    $status = UpdatePoints( $db_conn,$arrayLine );
+                    if($status !== 'OK'){
+                      $error_msg[] = $status; 
+                      break;
+                    }
+                } else {
+                    break;
+                }
+            }//end of for
+            if(count($error_msg) === 0) {
+                $db_conn->commit();
+                disconnect_db($db_conn);
+                $result = array("status" => "Ok"); 
+                $result['error_msg'] = 'Upload Success!!';
+                echo json_encode($result);
+            }
+            else{
+                $db_conn->rollback();
+                disconnect_db($db_conn);
+                $result = array("status" => "Error"); 
+                $result['error_msg'] = $error_msg;
+                echo json_encode($result);
+            }
 
         }else
         //Update MidPoints
@@ -102,6 +137,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             $data = $_POST['data'];
             $error_msg = [];
 
+            
             // $arrayLine = $data[0];
             // $line = [];
             // array_push($line,$arrayLine[1],$arrayLine[2],$arrayLine[3],$arrayLine[4],$arrayLine[5]);
