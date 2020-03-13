@@ -107,7 +107,7 @@ $(document).on('click', '#update_btn', function(){
               <tr>
                <th scope="col" hidden>ID</th>
                <th scope="col" hidden>Start</th>
-               <th scope="col">Point</th>
+               <th scope="col">Distance</th>
                <th scope="col">Ground Height</th>
                <th scope="col">Antenna Height</th>
                <th scope="col">antennatype</th>
@@ -123,7 +123,7 @@ $(document).on('click', '#update_btn', function(){
         <div class="row  pt-5">
           <div class="col-12 text-center">
             <table class="table" id="tableMidPoints">
-              <td colspan="5" align="Center" class="bg-light">MidPoints</td>
+              <td colspan="6" align="Center" class="bg-light">MidPoints</td>
               <tr>
                 <th scope="col" hidden>ID</th>
                 <th scope="col">distance</th>
