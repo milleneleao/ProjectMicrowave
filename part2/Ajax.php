@@ -83,7 +83,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                 echo json_encode($result);
               }
             } else {
-                disconnect_db($db_conn);
+                
                 $result = array("status" => "Error"); 
                 $result['error_msg'] = $error_msg;
                 echo json_encode($result);
@@ -93,35 +93,24 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         //Update Points
         if ($_POST['update'] == 2){
             $db_conn = connectDB();  
-            $db_conn->setAttribute(PDO::ATTR_AUTOCOMMIT,0);
-            $db_conn->beginTransaction();
             $data = $_POST['data'];
             $error_msg = [];
-            
-            for ($x = 0; $x < count($data); $x++) {
-                $line = [];
-                $arrayLine = $data[$x];
-                array_push($line,$arrayLine[2],$arrayLine[3],$arrayLine[4],$arrayLine[5],$arrayLine[6]);
-                $error_msg = validatePoint($line,$arrayLine,$x);
-                if(count($error_msg) === 0){
-                    $status = UpdatePoints( $db_conn,$arrayLine );
-                    if($status !== 'OK'){
-                      $error_msg[] = $status; 
-                      break;
-                    }
+            $line = [];
+            array_push($line,$data[2],$data[3],$data[4],$data[5],$data[6]);
+            $error_msg = validatePoint($line,$data[1],0);
+            if(count($error_msg) === 0){
+                $status = UpdatePoints( $db_conn,$data );
+                if($status !== 'OK'){
+                  $error_msg[] = $status; 
+                  $result = array("status" => "Error"); 
+                  $result['error_msg'] = $status;
+                  echo json_encode($result);
                 } else {
-                    break;
+                    $result = array("status" => "Ok"); 
+                    $result['error_msg'] = 'Upload Success!!';
+                    echo json_encode($result);
                 }
-            }//end of for
-            if(count($error_msg) === 0) {
-                $db_conn->commit();
-                disconnect_db($db_conn);
-                $result = array("status" => "Ok"); 
-                $result['error_msg'] = 'Upload Success!!';
-                echo json_encode($result);
-            }
-            else{
-                $db_conn->rollback();
+            } else{
                 disconnect_db($db_conn);
                 $result = array("status" => "Error"); 
                 $result['error_msg'] = $error_msg;
@@ -132,50 +121,31 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         //Update MidPoints
         if ($_POST['update'] == 3){
             $db_conn = connectDB();  
-            $db_conn->setAttribute(PDO::ATTR_AUTOCOMMIT,0);
-            $db_conn->beginTransaction();
             $data = $_POST['data'];
             $error_msg = [];
-
-            
-            // $arrayLine = $data[0];
-            // $line = [];
-            // array_push($line,$arrayLine[1],$arrayLine[2],$arrayLine[3],$arrayLine[4],$arrayLine[5]);
-            // $error_msg = validateMidPoints($line,0);
-            // $result = array("status" => "Ok"); 
-            // $result['error_msg'] = count($error_msg);
-            // echo json_encode($result);
-
-            for ($x = 0; $x < count($data); $x++) {
-                $line = [];
-                $arrayLine = $data[$x];
-                array_push($line,$arrayLine[1],$arrayLine[2],$arrayLine[3],$arrayLine[4],$arrayLine[5]);
-                $error_msg = validateMidPoints($line,$x);
-                if(count($error_msg) === 0){
-                    $status = UpdateMidPoints( $db_conn,$arrayLine );
-                    if($status !== 'OK'){
-                      $error_msg[] = $status; 
-                      break;
-                    }
+            $line = [];
+            array_push($line,$data[1],$data[2],$data[3],$data[4],$data[5]);
+            $error_msg = validateMidPoints($line,0);
+            if(count($error_msg) === 0){
+                $status = UpdateMidPoints( $db_conn,$data );
+                if($status !== 'OK'){
+                   disconnect_db($db_conn);
+                   $result = array("status" => "Error"); 
+                   $result['error_msg'] = $status;
+                   echo json_encode($result);
                 } else {
-                    break;
-                }
-            }
-
-            if(count($error_msg) === 0) {
-                $db_conn->commit();
-                disconnect_db($db_conn);
-                $result = array("status" => "Ok"); 
-                $result['error_msg'] = 'Upload Success!!';
-                echo json_encode($result);
-            }
-            else{
-                $db_conn->rollback();
+                    disconnect_db($db_conn);
+                    $result = array("status" => "Ok"); 
+                    $result['error_msg'] = 'Upload Success!!';
+                    echo json_encode($result);
+                  }
+            } else {
                 disconnect_db($db_conn);
                 $result = array("status" => "Error"); 
                 $result['error_msg'] = $error_msg;
                 echo json_encode($result);
             }
+       
         }
     }
 

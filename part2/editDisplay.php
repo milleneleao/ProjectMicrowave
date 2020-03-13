@@ -96,5 +96,14 @@
         </div><!--row-->
       </div><!--content-->
     </div><!-- content-fluid-->  
+
+	<div class="content">
+      <div class="row pt-5">
+        <div class="col-2"> </div>
+        <div class="col-8 text-center"  id="div3"> 
+		<div>
+		<div class="col-2"> </div>
+	  </div>
+	  </div>
  </body>
  </html>

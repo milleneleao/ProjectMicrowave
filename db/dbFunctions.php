@@ -66,7 +66,7 @@ function validatePathway($data,$line){
         if($i == 2){
             $msg = "Error: Line " . $line;
             $msg = $msg . " Field : Description ";
-            if(!isset($data[$i])){
+            if(strlen($data[$i]) == 0){
                 $error_msgs[] = $msg ." the field is required";
                 break;
             }
