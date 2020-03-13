@@ -74,6 +74,7 @@ $(document).on('click', '#update_btn', function(){
                  <th scope="col">Description</th>
                  <th scope="col">Note</th>
                  <th scope="col">File Name</th>
+                 <th scope="col">ddd Name</th>
                </tr>
   
                <tr id="trPathway">
@@ -83,6 +84,7 @@ $(document).on('click', '#update_btn', function(){
                  <td id="tdPathway" contenteditable="false">${response.pathway[0].description}</td>
                  <td id="tdPathway" contenteditable="false">${response.pathway[0].note}</td>
                  <td>${response.pathway[0].pathfile}</td>
+                 <td> </td>
                </tr>
             </table>
             </br>
