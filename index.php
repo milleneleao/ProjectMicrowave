@@ -32,7 +32,12 @@
 				<a href="./part2/editDisplay.php" class="list-group-item"><h4>Edit the data </h4></a>
 			</div>
 		</div>
-		
+		<div class="col-12 p-5 ">
+		   <h2 class="text-center display-4">Part 3</h2>
+			<div class="list-group">
+				<a href="./part3/Display.php" class="list-group-item"><h4>calculate and Graphic </h4></a>
+			</div>
+		</div>
 	  </div>
 	</div>  
   </div>  	
