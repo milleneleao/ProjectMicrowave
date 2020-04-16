@@ -47,7 +47,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             $pathL = $result['points'][1]['endpoint'];
 
             $PA = 92.4 + (20 * log10($opfrq)) + (20 * log10($pathL));
-            $result['pathway']["PA"] = $PA;
+            $result['pathway']["PA"] = round($PA,2);
 
             // print_r($result);
 

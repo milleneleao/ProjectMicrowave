@@ -130,7 +130,7 @@ $(document).on('click', '#calc_btn', function(){
 
         var chart = new CanvasJS.Chart("chartContainer", {
           title: {
-            text: "Path Attenuation"
+            text: "Path Attenuation = " + response.pathway.PA
           },
           axisX: {
             valueFormatString: ""
