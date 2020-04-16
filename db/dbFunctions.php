@@ -2,7 +2,7 @@
 
 // <!-- 
 // 	File:    dbFunctions.php
-// 	Purpose: Validate's Functions and Database Functions 
+// 	Purpose: Validate's Functions and Database Functions, Update changes functions
 // 	Authors: Millene L B S Cesconetto
 // 			 Olha Tymoshchuk
 // 			 Omar Rafik

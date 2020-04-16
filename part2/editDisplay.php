@@ -3,7 +3,7 @@
 ?>
 <!-- 
 	File:    formDisplay.php
-	Purpose: display the contact we entered
+	Purpose: display the edit page
 	Authors: Millene L B S Cesconetto
 			 Olha Tymoshchuk
 			 Omar Rafik

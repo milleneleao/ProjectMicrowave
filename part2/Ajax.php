@@ -1,8 +1,8 @@
 <?php
 // <!-- 
 // File:    Ajax.php
-// Purpose: page requested by Ajax.js. Returns an array with data when the request is "Display" 
-//          and returns a status array when the function is "Reset"
+// Purpose: page requested by Ajax.js. Returns an array with data when the page pulls up, returns updated  data in arrays
+//         
 // Authors: Millene L B S Cesconetto
 //          Olha Tymoshchuk
 //          Omar Rafik

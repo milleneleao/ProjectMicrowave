@@ -14,7 +14,8 @@
 	  <title>Path Way List</title>
       <link rel="stylesheet" href="../css/bootstrap.min.css">
 	  <script src="js/jquery-3.3.1.min.js"></script> 
-	  <script src="js/ajax.js"></script> 
+	  <script src="js/ajax.js"></script>
+	  <script src="js/canvasjs.min.js"></script> 
   </head>
   <body>
   <div class="container-fluid" >
@@ -115,5 +116,8 @@
 		<div class="col-2"> </div>
 	  </div>
 	  </div>
+	
+	  <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+	 
  </body>
  </html>
