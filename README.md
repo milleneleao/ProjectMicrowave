@@ -25,5 +25,7 @@ An application that helps telecommunication engineering company yo design microw
 3. Apparent terrain/obstruction heights based on the curvature of the earth</br>
 4. First Freznel Zone</br>
 5. Display the results of the path calculations in a tabular format, and where appropriate in a graphical format.</br>
+
 ![alt text](https://github.com/milleneleao/ProjectMicrowave/blob/master/css/Images/php7.PNG)
+
 ![alt text](https://github.com/milleneleao/ProjectMicrowave/blob/master/css/Images/php9.PNG)
